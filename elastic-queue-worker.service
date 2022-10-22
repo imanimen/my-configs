@@ -1,0 +1,11 @@
+[Unit]
+Description=Runs and keeps alive the artisan queue:work process for {project} elasticsearch indexing
+OnFailure=failure-notify@%n.service
+
+[Service]
+Restart=always
+WorkingDirectory=/usr/share/nginx/html/{project}/
+ExecStart=/usr/bin/php artisan queue:work --queue=elastic
+
+[Install]
+WantedBy=default.target

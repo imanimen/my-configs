@@ -1,0 +1,13 @@
+deploy1:
+  stage: deploy
+  script:
+    - cd /usr/share/nginx/html/castalk/castalk-api
+    - git pull
+    - composer install --ignore-platform-reqs
+    - php artisan migrate --force
+    - sudo systemctl restart {project}-queue-achievement-worker.service
+    - sudo systemctl restart {project}-queue-analytics-worker.service
+    - sudo systemctl restart {project}-queue-notification-worker.service
+    - sudo systemctl restart {project}-queue-elastic-worker.service
+    - sudo systemctl restart {project}-queue-worker.service
+
